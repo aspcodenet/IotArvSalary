@@ -38,14 +38,28 @@ class Employee:
         self._accountNo = accountNo
         self._namn = namn
 
+    def CalculateSalary(self):
+        return 0
+
+    def CreateSalaryTransaction(self):
+        return f"{self._namn} {self._accountNo} {self.CalculateSalary()}"
+
 
 class MonthlyEmployee(Employee):
     def __init__(self,namn, birthDate,accountNo, monthlySalary):
         super().__init__(namn,birthDate,accountNo)
         self._monthlySalary = monthlySalary
 
-    def CreateSalaryTransaction(self):
-        return f"{self._namn} {self._accountNo} {self._monthlySalary}"
+    def CalculateSalary(self):
+        return self._monthlySalary
+
+
+class UnpaidMonthlySlave(MonthlyEmployee):
+    def __init__(self,namn, birthDate,accountNo):
+        super().__init__(namn,birthDate,accountNo, 0)
+
+    def CalculateSalary(self):
+        return 0
 
 
 class HourlyEmployee(Employee):
@@ -54,8 +68,9 @@ class HourlyEmployee(Employee):
         self._hoursWorked = hoursWorked
         self._hourlySalary = hourlySalary
 
-    def CreateSalaryTransaction(self):
-        return f"{self._namn} {self._accountNo} {self._hourlySalary * self._hoursWorked}"
+    def CalculateSalary(self):
+        return self._hourlySalary * self._hoursWorked
+
 
 class SalesmanEmployee(Employee):
     def __init__(self,namn, birthDate,accountNo, monthlySalary, soldFor):
@@ -63,8 +78,9 @@ class SalesmanEmployee(Employee):
         self._monthlySalary = monthlySalary
         self._soldFor = soldFor
 
-    def CreateSalaryTransaction(self):
-        return f"{self._namn} {self._accountNo} {self._monthlySalary + self._soldFor * 0.02}"
+    def CalculateSalary(self):
+        return self._monthlySalary + self._soldFor * 0.02
+
 
     
 lista = []
@@ -78,10 +94,8 @@ lista.append(e)
 e = HourlyEmployee("Fanny", datetime.date(2000,1,2),"74384794-23443",20,130)
 lista.append(e)
 
-
 e = SalesmanEmployee("Josefine", datetime.date(2002,3,30),"23423443",6000,8000)
 lista.append(e)
-
 
 for employee in lista:
     print(employee.CreateSalaryTransaction())
