@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 import datetime
 
 #class Employee:
@@ -32,12 +33,13 @@ import datetime
 #        return f"{self._accountNo} {salary}"
 
 
-class Employee:
+class Employee(ABC):
     def __init__(self,namn, birthDate,accountNo):
         self._birthDate = birthDate
         self._accountNo = accountNo
         self._namn = namn
 
+    @abstractmethod
     def CalculateSalary(self):
         return 0
 
@@ -96,6 +98,14 @@ lista.append(e)
 
 e = SalesmanEmployee("Josefine", datetime.date(2002,3,30),"23423443",6000,8000)
 lista.append(e)
+
+
+
+e = Employee("David", datetime.date(2002,3,30),"12345")
+lista.append(e)
+
+
+
 
 for employee in lista:
     print(employee.CreateSalaryTransaction())
